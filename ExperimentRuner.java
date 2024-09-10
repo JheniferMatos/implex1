@@ -1,3 +1,4 @@
+//Alunos: Jhénifer Matos de Mendonça Pereira e Sidney Kenzo Goya Miyassato
 
 public class ExperimentRuner {
     private static final String[] ALGORITHMS = {"bubble", "insertion", "merge", "heap", "quick", "count"};
