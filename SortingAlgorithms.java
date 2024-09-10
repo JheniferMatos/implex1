@@ -1,3 +1,4 @@
+//Alunos: Jhénifer Matos de Mendonça Pereira e Sidney Kenzo Goya Miyassato
 
 import java.util.Arrays;
 
@@ -117,8 +118,44 @@ public class SortingAlgorithms {
             heapify(arr, n, raiz); //chamada recursiva para garantir a propriedade da max-heap
         }
     }
+    
 
-    //Quick Sort
+    //QuickSort
+    /* 
+    private static void quickSort(int arr[]) {
+        divideQuickSort(arr, 0, arr.length - 1);
+    }
+    
+    private static void divideQuickSort(int[] arr, int low, int high){
+        
+        if (low < high) {
+            int pi = conquistaQuickSort(arr, low, high);
+            divideQuickSort(arr, low, pi - 1);
+            divideQuickSort(arr, pi + 1, high);
+        }
+        
+    }
+
+    private static int conquistaQuickSort(int[] arr, int esq, int dir) {
+        int pivot = arr[dir];
+        int i = (esq - 1);
+        for (int j = esq; j <= dir - 1; j++) {
+            if (arr[j] < pivot) {
+                i++;
+                troca(arr, i, j);
+            }
+        }
+        troca(arr, i + 1, dir);
+        return (i + 1);
+    }
+
+    private static void troca(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    */
+
     private static void quickSort(int[] arr){
         divideQuickSort (arr, 0, arr.length-1);
     }
