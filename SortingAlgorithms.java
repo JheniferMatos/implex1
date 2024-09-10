@@ -1,3 +1,4 @@
+
 import java.util.Arrays;
 
 public class SortingAlgorithms {
@@ -63,6 +64,93 @@ public class SortingAlgorithms {
         }
     }
 
+    //Counting Sort
+    private static void countSort(int[] arr) {
+        int n = arr.length;
+        int auxiliar = 0;
+        int[] arrayauxiliar2 = new int[n];
+        for (int i = 0; i < n; i++) {
+            auxiliar = Math.max(auxiliar, arr[i]);
+        }
+        int[] arrayauxiliar = new int[auxiliar + 1];
+        for (int i = 0; i < n; i++) {
+            arrayauxiliar[arr[i]]++;
+        }
+        for (int i = 1; i <= auxiliar; i++) { //loop para fazer a soma cumulativa
+            arrayauxiliar[i] += arrayauxiliar[i - 1];
+        }
+        for (int i = n - 1; i >= 0; i--) {
+            arrayauxiliar2[arrayauxiliar[arr[i]] - 1] = arr[i];
+            arrayauxiliar[arr[i]]--;
+        }
+        arr = arrayauxiliar2.clone();
+    }
+
+    //Heap Sort
+    private static void heapSort(int arr[]) {
+        int n = arr.length;
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            heapify(arr, n, i);
+        }
+        for (int i = n - 1; i > 0; i--) {
+            int auxiliar = arr[0];
+            arr[0] = arr[i];
+            arr[i] = auxiliar;
+            heapify(arr, i, 0);
+        }
+    }
+
+    private static void heapify(int arr[], int n, int i) {
+        int raiz = i;
+        int esq = 2 * i + 1;
+        int dir = 2 * i + 2;
+        if (esq < n && arr[esq] > arr[raiz]) {
+            raiz = esq;
+        }
+        if (dir < n && arr[dir] > arr[raiz]) {
+            raiz = dir;
+        }
+        if (raiz != i) {
+            int auxiliar = arr[i];
+            arr[i] = arr[raiz];
+            arr[raiz] = auxiliar;
+            heapify(arr, n, raiz); //chamada recursiva para garantir a propriedade da max-heap
+        }
+    }
+
+    //Quick Sort
+    private static void quickSort(int[] arr){
+        divideQuickSort (arr, 0, arr.length-1);
+    }
+
+    private static void divideQuickSort(int[] arr, int inicioVet, int fimVet){
+        int i, j, pivot, auxiliar;
+        i = inicioVet;
+        j = fimVet;
+        pivot = arr[(inicioVet + fimVet) / 2];
+        while(i <= j){
+            while(arr[i] < pivot){
+                i++;
+            }
+            while(arr[j] > pivot){
+                j--;
+            }
+            if(i <= j){
+                auxiliar = arr[i];
+                arr[i] = arr[j];
+                arr[j] = auxiliar;
+                i++;
+                j--;
+            }
+        }
+        if(inicioVet < j){
+            divideQuickSort(arr, inicioVet, j);
+        }
+        if(fimVet > i){
+            divideQuickSort(arr, i, fimVet);
+        }
+    }
+        
 
     // Método para medir o tempo de execução
     public static Pair<int[], Long> measureSortingTime(int[] arr, String algorithm) {
@@ -79,6 +167,15 @@ public class SortingAlgorithms {
             case "merge":
                 mergeSort(arrCopy);
                 break;
+            case "count":
+                countSort(arrCopy);
+                break;
+            case "heap":
+                heapSort(arrCopy);
+                break;
+            case "quick":
+                quickSort(arrCopy);
+                break;
             default:
                 throw new IllegalArgumentException("Algoritmo de ordenação não reconhecido: " + algorithm);
         }
@@ -92,7 +189,7 @@ public class SortingAlgorithms {
         int[] arr = {64, 34, 25, 12, 22, 11, 90};
         System.out.println("Array original: " + Arrays.toString(arr));
 
-        String[] algorithms = {"bubble", "insertion", "merge"};
+        String[] algorithms = {"bubble", "insertion", "merge", "count", "heap", "quick"};
 
         for (String algorithm : algorithms) {
             Pair<int[], Long> result = measureSortingTime(arr, algorithm);
@@ -103,4 +200,3 @@ public class SortingAlgorithms {
         }
     }
 }
-
