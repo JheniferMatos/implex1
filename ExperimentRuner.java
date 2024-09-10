@@ -1,7 +1,6 @@
-import java.util.Arrays;
 
 public class ExperimentRuner {
-    private static final String[] ALGORITHMS = {"bubble", "insertion", "merge"};
+    private static final String[] ALGORITHMS = {"bubble", "insertion", "merge", "heap", "quick", "count"};
 
     public static void runExperiments(int inc, int fim, int stp, int rpt) {
         System.out.println("[[RANDOM]]");
@@ -35,7 +34,7 @@ public class ExperimentRuner {
             System.out.printf("%-15s", algorithm);
         }
         System.out.println();
-        System.out.println("-".repeat(100));
+        System.out.println("-".repeat(123));
     }
 
     private static void runRandomExperiment(int size, int rpt) {
