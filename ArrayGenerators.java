@@ -1,5 +1,7 @@
-import java.util.Random;
+//Alunos: Jhénifer Matos de Mendonça Pereira e Sidney Kenzo Goya Miyassato
+
 import java.util.Arrays;
+import java.util.Random;
 
 public class ArrayGenerators {
 
