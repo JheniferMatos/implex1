@@ -1,7 +1,11 @@
-import java.util.Arrays;
+//Alunos: Jhénifer Matos de Mendonça Pereira e Sidney Kenzo Goya Miyassato
+
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class ExperimentRuner {
-    private static final String[] ALGORITHMS = {"bubble", "insertion", "merge"};
+
+    private static final String[] ALGORITHMS = {"bubble", "insertion", "merge", "heap", "quick", "count"};
 
     public static void runExperiments(int inc, int fim, int stp, int rpt) {
         System.out.println("[[RANDOM]]");
@@ -35,7 +39,7 @@ public class ExperimentRuner {
             System.out.printf("%-15s", algorithm);
         }
         System.out.println();
-        System.out.println("-".repeat(100));
+        System.out.println("-".repeat(123));
     }
 
     private static void runRandomExperiment(int size, int rpt) {
@@ -50,6 +54,20 @@ public class ExperimentRuner {
             }
             double averageTime = totalTime / (double) rpt / 1e9; // Converte para segundos
             System.out.printf("%-15.6f", averageTime);
+            
+            try { //cria um arquivo .dat para criar um gráfico no gnuplot
+                // o primeiro número de cada linha é o eixo X
+                //representando o tamanho da entrada
+                // o segundo número é o eixo Y, representando o tempo
+                FileWriter writer = new FileWriter(algorithm+"-random.dat", true); 
+                String newLine = System.lineSeparator(); //separar os diferentes dados
+                writer.write(size + " ");
+                writer.write(Double.toString(averageTime) + newLine);
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+                
         }
         System.out.println();
     }
@@ -74,7 +92,21 @@ public class ExperimentRuner {
         for (String algorithm : ALGORITHMS) {
             Pair<int[], Long> result = SortingAlgorithms.measureSortingTime(arr, algorithm);
             long time = result.getValue();
+            double averageTime = time / 1e9;
             System.out.printf("%-15.6f", time / 1e9); // Converte para segundos
+        
+            try { //cria um arquivo .dat para criar um gráfico no gnuplot
+                // o primeiro número de cada linha é o eixo X
+                //representando o tamanho da entrada
+                // o segundo número é o eixo Y, representando o tempo
+                FileWriter writer = new FileWriter(algorithm+"-"+arrayType+".dat", true); 
+                String newLine = System.lineSeparator(); //separar os diferentes dados
+                writer.write(size + " ");
+                writer.write(Double.toString(averageTime) + newLine);
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         System.out.println();
     }
