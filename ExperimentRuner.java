@@ -1,8 +1,15 @@
-import java.util.Arrays;
+//Alunos: Jhénifer Matos de Mendonça Pereira e Sidney Kenzo Goya Miyassato
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.File;
+//Gera os experimentos de cada algoritmo
 public class ExperimentRuner {
-    private static final String[] ALGORITHMS = {"bubble", "insertion", "merge"};
 
+    private static final String[] ALGORITHMS = {"bubble", "insertion", "merge", "heap", "quick", "count"};
+
+
+    //imprime o experimento de cada algoritmo 
     public static void runExperiments(int inc, int fim, int stp, int rpt) {
         System.out.println("[[RANDOM]]");
         printHeader();
@@ -35,7 +42,7 @@ public class ExperimentRuner {
             System.out.printf("%-15s", algorithm);
         }
         System.out.println();
-        System.out.println("-".repeat(100));
+        System.out.println("-".repeat(123));
     }
 
     private static void runRandomExperiment(int size, int rpt) {
@@ -50,6 +57,8 @@ public class ExperimentRuner {
             }
             double averageTime = totalTime / (double) rpt / 1e9; // Converte para segundos
             System.out.printf("%-15.6f", averageTime);
+            writeResultsToFile("random", algorithm, size, averageTime);
+                
         }
         System.out.println();
     }
@@ -74,11 +83,33 @@ public class ExperimentRuner {
         for (String algorithm : ALGORITHMS) {
             Pair<int[], Long> result = SortingAlgorithms.measureSortingTime(arr, algorithm);
             long time = result.getValue();
+            double averageTime = time / 1e9;
             System.out.printf("%-15.6f", time / 1e9); // Converte para segundos
+        
+            writeResultsToFile(arrayType, algorithm, size, averageTime);
         }
         System.out.println();
     }
 
+    private static void ensureDataDirectoryExists() {
+        File directory = new File("data");
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
+    }
+
+    private static void writeResultsToFile(String arrayType, String algorithm, int size, double averageTime) {
+        ensureDataDirectoryExists();
+        try (FileWriter writer = new FileWriter("data/" + algorithm + "-" + arrayType + ".dat", true)) {
+            String newLine = System.lineSeparator(); // Separar os diferentes dados
+            writer.write(size + " ");
+            writer.write(Double.toString(averageTime) + newLine);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+ 
     public static void main(String[] args) {
         runExperiments(1000, 20000, 1000, 10);
     }

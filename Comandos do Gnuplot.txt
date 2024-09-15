@@ -1,0 +1,27 @@
+plot 'bubble-nearlySorted.dat' using 1:2 with linespoints title 'bubble', \
+'count-nearlySorted.dat' using 1:2 with linespoints title 'count', \
+'heap-nearlySorted.dat' using 1:2 with linespoints title 'heap', \
+'insertion-nearlySorted.dat' using 1:2 with linespoints title 'insertion', \
+'merge-nearlySorted.dat' using 1:2 with linespoints title 'merge', \
+'quick-nearlySorted.dat' using 1:2 with linespoints title 'quick'
+
+plot 'bubble-random.dat' using 1:2 with linespoints title 'bubble', \
+'count-random.dat' using 1:2 with linespoints title 'count', \
+'heap-random.dat' using 1:2 with linespoints title 'heap', \
+'insertion-random.dat' using 1:2 with linespoints title 'insertion', \
+'merge-random.dat' using 1:2 with linespoints title 'merge', \
+'quick-random.dat' using 1:2 with linespoints title 'quick'
+
+plot 'bubble-reverse.dat' using 1:2 with linespoints title 'bubble', \
+'count-reverse.dat' using 1:2 with linespoints title 'count', \
+'heap-reverse.dat' using 1:2 with linespoints title 'heap', \
+'insertion-reverse.dat' using 1:2 with linespoints title 'insertion', \
+'merge-reverse.dat' using 1:2 with linespoints title 'merge', \
+'quick-reverse.dat' using 1:2 with linespoints title 'quick'
+
+plot 'bubble-sorted.dat' using 1:2 with linespoints title 'bubble', \
+'count-sorted.dat' using 1:2 with linespoints title 'count', \
+'heap-sorted.dat' using 1:2 with linespoints title 'heap', \
+'insertion-sorted.dat' using 1:2 with linespoints title 'insertion', \
+'merge-sorted.dat' using 1:2 with linespoints title 'merge', \
+'quick-sorted.dat' using 1:2 with linespoints title 'quick'
