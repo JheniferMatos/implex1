@@ -2,11 +2,14 @@
 
 import java.io.FileWriter;
 import java.io.IOException;
-
+import java.io.File;
+//Gera os experimentos de cada algoritmo
 public class ExperimentRuner {
 
     private static final String[] ALGORITHMS = {"bubble", "insertion", "merge", "heap", "quick", "count"};
 
+
+    //imprime o experimento de cada algoritmo 
     public static void runExperiments(int inc, int fim, int stp, int rpt) {
         System.out.println("[[RANDOM]]");
         printHeader();
@@ -54,19 +57,7 @@ public class ExperimentRuner {
             }
             double averageTime = totalTime / (double) rpt / 1e9; // Converte para segundos
             System.out.printf("%-15.6f", averageTime);
-            
-            try { //cria um arquivo .dat para criar um gráfico no gnuplot
-                // o primeiro número de cada linha é o eixo X
-                //representando o tamanho da entrada
-                // o segundo número é o eixo Y, representando o tempo
-                FileWriter writer = new FileWriter(algorithm+"-random.dat", true); 
-                String newLine = System.lineSeparator(); //separar os diferentes dados
-                writer.write(size + " ");
-                writer.write(Double.toString(averageTime) + newLine);
-                writer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            writeResultsToFile("random", algorithm, size, averageTime);
                 
         }
         System.out.println();
@@ -95,22 +86,30 @@ public class ExperimentRuner {
             double averageTime = time / 1e9;
             System.out.printf("%-15.6f", time / 1e9); // Converte para segundos
         
-            try { //cria um arquivo .dat para criar um gráfico no gnuplot
-                // o primeiro número de cada linha é o eixo X
-                //representando o tamanho da entrada
-                // o segundo número é o eixo Y, representando o tempo
-                FileWriter writer = new FileWriter(algorithm+"-"+arrayType+".dat", true); 
-                String newLine = System.lineSeparator(); //separar os diferentes dados
-                writer.write(size + " ");
-                writer.write(Double.toString(averageTime) + newLine);
-                writer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            writeResultsToFile(arrayType, algorithm, size, averageTime);
         }
         System.out.println();
     }
 
+    private static void ensureDataDirectoryExists() {
+        File directory = new File("data");
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
+    }
+
+    private static void writeResultsToFile(String arrayType, String algorithm, int size, double averageTime) {
+        ensureDataDirectoryExists();
+        try (FileWriter writer = new FileWriter("data/" + algorithm + "-" + arrayType + ".dat", true)) {
+            String newLine = System.lineSeparator(); // Separar os diferentes dados
+            writer.write(size + " ");
+            writer.write(Double.toString(averageTime) + newLine);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+ 
     public static void main(String[] args) {
         runExperiments(1000, 20000, 1000, 10);
     }
